@@ -1,0 +1,5 @@
+//Para criar a migração basta
+npx sequelize-cli model:create --name Tabela --attributes column1:string,column2:number;
+
+//para roda a migração
+npx sequelize-cli db:migrate
