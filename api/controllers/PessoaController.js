@@ -83,19 +83,19 @@ class PessoaController {
                 return res.status(404).json({ message: 'O ID deve ser um número!' });
             }
 
-            let isPeople = await database.Pessoas.findOne({
+            await database.Pessoas.update(newInfoPeople, {
                 where:{
                     id: Number(id)
                 }
             });
 
-            if (!isPeople || isPeople.ativo === false) {
-                return res.status(404).json({ message: 'Pessoa não encontrada!' });
-            }
-            isPeople = await database.Pessoas.create(newInfoPeople)
-            await isPeople.save();
+            const peopleUpdate = await database.Pessoas.findOne({
+                where: {
+                    id: Number(id)
+                }
+            })
 
-            return res.status(200).json({message: `${isPeople.nome} foi atualizado com sucesso!`})
+            return res.status(200).json({message: `${peopleUpdate.nome} foi atualizado com sucesso!`})
         } catch (error) {
             return res.status(500).json(error.message);
         }
