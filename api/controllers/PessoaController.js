@@ -100,6 +100,30 @@ class PessoaController {
             return res.status(500).json(error.message);
         }
     }
+
+    static async createMatricuala(req, res){
+        const { id } = req.params;
+        const newMatricuala = {...req.body, estudanteId: Number(id) }
+        try {
+
+            const createdMatricula = await database.Matriculas.create(newMatricuala);
+
+            return res.status(200).json(createdMatricula);
+            
+        } catch (error) {
+            return res.status(500).json(error.message);
+        }
+    }
+
+    static async findAllMatricula (req, res){
+        try {
+            const matriculas = await database.Matriculas.findAll();
+
+            return res.status(200).json(matriculas)
+        } catch (error) {
+            return res.status(500).json(error.message);
+        }
+    }
 }
 
 module.exports = PessoaController;
