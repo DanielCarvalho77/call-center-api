@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'consumerId'
       });
       Pessoas.hasMany(models.Tickets,{
-        foreignKey: 'consumerId'
+        foreignKey: 'idConsumidor'
       });
     }
   }
