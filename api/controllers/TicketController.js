@@ -18,7 +18,6 @@ class TicketController {
         const { consumerId , productId } = req.params;
         const newTicket = {...req.body, consumerId: consumerId, productId: productId }
         try {
-            console.log('newTicket --- ',newTicket);
 
             const ticket = await database.Tickets.create(newTicket)
             
@@ -62,6 +61,41 @@ class TicketController {
             return res.status(500).json(error.message);
         }
     }
+
+    static async updateTickets (req, res) {
+        const { consumerId , productId, id } = req.params;
+        const updateTicket = {...req.body, consumerId: consumerId, productId: productId }
+        try {
+
+            const thisIsTicket = await database.Tickets.findOne({
+                where: {
+                    id: id
+                }
+            });
+
+            if(!thisIsTicket){
+                return res.status(404).json({message: 'Ticket não encontrado!'});
+            };
+
+            console.log('updateTicket.productId --------- ', req.body.productId);
+
+            await database.Tickets.update( 
+                { productId: req.body.productId },
+                {
+                where: {
+                    id: thisIsTicket.id
+                }
+            })
+
+            console.log('thisIsTicket ----- ', thisIsTicket);
+            
+            return res.status(200).json({});
+        } catch (error) {
+            return res.status(500).json(error.message);
+        }
+    }
+
+
 }
 
 module.exports = TicketController;

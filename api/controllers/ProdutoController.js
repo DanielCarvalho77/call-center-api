@@ -11,7 +11,6 @@ class ProdutoController {
                     name: product.name
                 }
             });
-            console.log(existProduct);
 
             if (existProduct?.length) {
                 return res.status(404).json({message: 'produto já existe'})
@@ -19,7 +18,7 @@ class ProdutoController {
 
             const productCreated = await database.Produtos.create(product);
             
-            return res.status(200).json({message: `${productCreated.name} foi criado com sucesso!`})
+            return res.status(200).json({message: `${productCreated.name} foi criado com sucesso!`, productCreated})
         } catch (error) {
             return res.status(500).json(error.message);
         }
