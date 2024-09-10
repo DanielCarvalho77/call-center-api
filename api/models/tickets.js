@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
       Tickets.belongsTo(models.Produtos,{
         foreignKey: 'productId'
       });
+      Tickets.hasMany(models.Cases,{
+        foreignKey: 'ticketId'
+      });
     }
   }
   Tickets.init({

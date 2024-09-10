@@ -63,8 +63,8 @@ class TicketController {
     }
 
     static async updateTickets (req, res) {
-        const { consumerId , productId, id } = req.params;
-        const updateTicket = {...req.body, consumerId: consumerId, productId: productId }
+        const { id } = req.params;
+        const updateTicket = {...req.body }
         try {
 
             const thisIsTicket = await database.Tickets.findOne({
@@ -77,24 +77,17 @@ class TicketController {
                 return res.status(404).json({message: 'Ticket não encontrado!'});
             };
 
-            console.log('updateTicket.productId --------- ', req.body.productId);
-
-            await database.Tickets.update( 
-                { productId: req.body.productId },
-                {
+            await database.Tickets.update(updateTicket, {
                 where: {
                     id: thisIsTicket.id
                 }
             })
 
-            console.log('thisIsTicket ----- ', thisIsTicket);
-            
             return res.status(200).json({});
         } catch (error) {
             return res.status(500).json(error.message);
         }
     }
-
 
 }
 
